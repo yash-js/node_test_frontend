@@ -42,16 +42,17 @@ export function useForm(setShowModal) {
 
   const saveCandidate = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData();
     formData.append("name", name);
     formData.append("dateOfBirth", dob);
     formData.append("country", country);
     formData.append("resume", file);
     const resp = await saveCandidateApiCall(formData);
-    if (resp.status === 200) {
-      await getList();
-      setShowModal(false);
-    }
+    await getList();
+    setShowModal(false);
+
+    setLoading(false);
   };
 
   useEffect(() => {
